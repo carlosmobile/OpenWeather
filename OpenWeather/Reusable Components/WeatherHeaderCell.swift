@@ -9,8 +9,8 @@ import UIKit
 
 class WeatherHeaderCell: UITableViewCell {
 
-    let cityLabel = UILabel()
-    let temperatureLabel = UILabel()
+    private let cityLabel = UILabel()
+    private let temperatureLabel = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -26,6 +26,7 @@ class WeatherHeaderCell: UITableViewCell {
         // Add the UI components
         contentView.addSubview(cityLabel)
         contentView.addSubview(temperatureLabel)
+        
         cityLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         temperatureLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         NSLayoutConstraint.activate([

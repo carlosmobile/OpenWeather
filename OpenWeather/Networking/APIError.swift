@@ -13,4 +13,3 @@ enum APIError: Error {
     case decodingFailure
     case noInternet
 }
-

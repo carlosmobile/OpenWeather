@@ -11,36 +11,53 @@ import CoreLocation
 class WeatherViewController: UIViewController {
     
     var viewModel: WeatherViewModel = WeatherViewModel()
-    
-    let locationManager = CLLocationManager()
-    let defaults = UserDefaults.standard
-    let weatherTableView = UITableView()
+        
+    private let weatherTableView = UITableView()
+    private let bottomLocationSheet = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(weatherTableView)
-        view.backgroundColor = .white
+        
         weatherTableView.dataSource = self
         weatherTableView.delegate = self
+        
+        configureUI()
+        configureViewModelObserver()
+    }
+    
+    private func configureUI() {
+        view.backgroundColor = .white
         weatherTableView.backgroundColor = .red
-        
-        locationManager.delegate = self
-        
+                
         weatherTableView.register(WeatherHeaderCell.self, forCellReuseIdentifier: "WeatherHeaderCell")
         
+        view.addSubview(weatherTableView)
+        view.addSubview(bottomLocationSheet)
+        
         weatherTableView.translatesAutoresizingMaskIntoConstraints = false
+        bottomLocationSheet.translatesAutoresizingMaskIntoConstraints = false
+        
         weatherTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         weatherTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         weatherTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         weatherTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         
-        if let lat = defaults.object(forKey: "latitude") as? Double{
-            if let lon = defaults.object(forKey: "longitude") as? Double {
-                viewModel.requestWeatherByLocation(lat: lat, lon: lon)
-            }
-        } else {
-            locationManager.requestWhenInUseAuthorization()
-            locationManager.requestLocation()
+        bottomLocationSheet.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+        bottomLocationSheet.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+        bottomLocationSheet.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        bottomLocationSheet.heightAnchor.constraint(equalToConstant: 200).isActive = true
+
+        bottomLocationSheet.backgroundColor = .blue
+    }
+    
+    private func configureViewModelObserver() {
+        viewModel.weatherData.bind { (_) in
+            print("bbb weatherModel updated")
+        }
+        
+        viewModel.isNecessaryToShowBottomLocationSheet.bind { value in
+            guard let showBottom = value else { return }
+            self.bottomLocationSheet.isHidden = !showBottom
         }
     }
 
@@ -89,25 +106,6 @@ extension WeatherViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200//UITableView.automaticDimension
+        return 200
     }
-}
- 
-// MARK: - CLLocationManagerDelegate
-extension WeatherViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        locationManager.stopUpdatingLocation()
-        if let location = locations.last {
-            let lat = location.coordinate.latitude
-            let lon = location.coordinate.longitude
-            self.defaults.set(lat, forKey: "latitude")
-            self.defaults.set(lon, forKey: "longitude")
-            viewModel.requestWeatherByLocation(lat: lat, lon: lon)
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("error")
-    }
-
 }

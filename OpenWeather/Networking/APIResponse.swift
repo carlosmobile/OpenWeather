@@ -18,10 +18,9 @@ extension APIResponse where Body == Data? {
             throw APIError.decodingFailure
         }
         let jsonDecoder = JSONDecoder()
-        let decodedJSON = try jsonDecoder.decode(BodyType.self, from: data)
+        let decodedJSON = try jsonDecoder.decode(type, from: data)
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
         return APIResponse<BodyType>(statusCode: self.statusCode,
                                      body: decodedJSON)
     }
 }
-

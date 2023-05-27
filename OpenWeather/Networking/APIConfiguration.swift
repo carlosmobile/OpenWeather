@@ -9,11 +9,13 @@ import Foundation
 import CoreLocation
 
 struct Server {
-    private let baseURL = "https://api.openweathermap.org/data/2.5/weather?"
+    private let baseURL = "https://api.openweathermap.org/data/2.5/onecall?"
     private let apiKey = "7d2c7c24f231ae36b7a93b927c735d53"
+    private let exclude = "daily,minutely,current,alerts"
+    private let metric = "metric"
     
-    func getWeatherURLByLocationWith(lat: CLLocationDegrees, lon: CLLocationDegrees) -> String {
-        let weatherURL = "\(baseURL)lat=\(lat)&lon=\(lon)&appid=\(apiKey)"
+    func getWeatherURLByLocationWith(latitude: CLLocationDegrees, longitude: CLLocationDegrees, language: String) -> String {
+        let weatherURL = "\(baseURL)lat=\(latitude)&lon=\(longitude)&exclude=\(exclude)&units=\(metric)&appid=\(apiKey)&lang=\(language)"
         return weatherURL
     }
 }
