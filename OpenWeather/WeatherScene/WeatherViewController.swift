@@ -27,8 +27,6 @@ class WeatherViewController: UIViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = .white
-        weatherTableView.backgroundColor = .red
                 
         weatherTableView.register(WeatherHeaderCell.self, forCellReuseIdentifier: "WeatherHeaderCell")
         
@@ -38,15 +36,16 @@ class WeatherViewController: UIViewController {
         weatherTableView.translatesAutoresizingMaskIntoConstraints = false
         bottomLocationSheet.translatesAutoresizingMaskIntoConstraints = false
         
-        weatherTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        weatherTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        weatherTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        weatherTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        
-        bottomLocationSheet.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        bottomLocationSheet.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        bottomLocationSheet.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        bottomLocationSheet.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        NSLayoutConstraint.activate([
+            weatherTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            weatherTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            weatherTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            weatherTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            bottomLocationSheet.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+            bottomLocationSheet.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+            bottomLocationSheet.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            bottomLocationSheet.heightAnchor.constraint(equalToConstant: 200)
+        ])
         
         bottomLocationSheet.buttonTargetAction = (self,#selector(WeatherViewController.sheetButtonAction))
 
@@ -55,7 +54,6 @@ class WeatherViewController: UIViewController {
     
     @objc func sheetButtonAction(sender: UIButton!) {
         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
-        print("Button tapped")
     }
     
     private func configureViewModelObserver() {
@@ -88,7 +86,6 @@ class WeatherViewController: UIViewController {
             }
         }
     }
-
 }
 
 //MARK: - UITableView Configuration
@@ -136,6 +133,6 @@ extension WeatherViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
+        return 300
     }
 }

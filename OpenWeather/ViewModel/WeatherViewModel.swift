@@ -33,7 +33,6 @@ class WeatherViewModel {
             }
         }
         isNecessaryToShowBottomLocationSheet.value = !locationManager.isAuthorizedLocation
-        print("aaa \(String(describing: isNecessaryToShowBottomLocationSheet.value))")
     }
     
     func getLocationCoordinates() -> CLLocation {
@@ -71,9 +70,6 @@ class WeatherViewModel {
                     DispatchQueue.main.async {
                         self.isLoadingData.value = false
                     }
-                    
-                    print("aaa changed weather data fetch")
-//                    print(response.body)
                 }
                 else {
                     if response.statusCode == 401 {

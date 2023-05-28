@@ -8,9 +8,7 @@
 import UIKit
 
 class FooterSheetView: UIView {
-    
-    var shouldSetupConstraints = true
-    
+        
     private let titleLabel = UILabel()
     private lazy var loginButton = UIButton()
     
@@ -27,14 +25,13 @@ class FooterSheetView: UIView {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         
-        titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        loginButton.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
             titleLabel.heightAnchor.constraint(equalToConstant: 70),
+            titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             loginButton.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            loginButton.heightAnchor.constraint(equalToConstant: 70)
+            loginButton.heightAnchor.constraint(equalToConstant: 70),
+            loginButton.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
     }
     
