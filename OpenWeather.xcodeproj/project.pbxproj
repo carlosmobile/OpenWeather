@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0769810B2A23731A0057A0A8 /* SpinnerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0769810A2A23731A0057A0A8 /* SpinnerController.swift */; };
 		07CDC4912A2137E100FB1B83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CDC4902A2137E100FB1B83 /* AppDelegate.swift */; };
 		07CDC49A2A2137E300FB1B83 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07CDC4992A2137E300FB1B83 /* Assets.xcassets */; };
 		07CDC49D2A2137E300FB1B83 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07CDC49B2A2137E300FB1B83 /* LaunchScreen.storyboard */; };
@@ -46,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0769810A2A23731A0057A0A8 /* SpinnerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerController.swift; sourceTree = "<group>"; };
 		07CDC48D2A2137E100FB1B83 /* OpenWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07CDC4902A2137E100FB1B83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07CDC4992A2137E300FB1B83 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 			children = (
 				07CDC4C22A21395100FB1B83 /* Bindable.swift */,
 				07CDC4E22A22671900FB1B83 /* LocationManager.swift */,
+				0769810A2A23731A0057A0A8 /* SpinnerController.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				07CDC4CE2A21769100FB1B83 /* WeatherHeaderCell.swift in Sources */,
 				07CDC4E02A21831900FB1B83 /* SessionProtocol.swift in Sources */,
 				07CDC4E62A22B50300FB1B83 /* FooterSheetView.swift in Sources */,
+				0769810B2A23731A0057A0A8 /* SpinnerController.swift in Sources */,
 				07CDC4C62A2139E500FB1B83 /* WeatherViewModel.swift in Sources */,
 				07CDC4DE2A21831900FB1B83 /* APIClient.swift in Sources */,
 				07CDC4C92A213A7500FB1B83 /* WeatherViewController.swift in Sources */,

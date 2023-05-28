@@ -11,37 +11,42 @@ class FooterSheetView: UIView {
     
     var shouldSetupConstraints = true
     
-    private let title = UILabel()
+    private let titleLabel = UILabel()
     private lazy var loginButton = UIButton()
-    
-    var bannerView: UIImageView!
-    var profileView: UIImageView!
-    var segmentedControl: UISegmentedControl!
-    
-    let screenSize = UIScreen.main.bounds
     
     override init(frame: CGRect){
         super.init(frame: frame)
         
-        bannerView = UIImageView(frame: CGRect.zero)
-        bannerView.backgroundColor = UIColor.gray
+        titleLabel.text = "Por favor, da permisos a la localización"
+        titleLabel.textColor = .white
+        loginButton.setTitle("Ir a settings", for: .normal)
         
-        bannerView.autoSetDimension(.height, toSize: screenSize.width / 3)
+        self.addSubview(titleLabel)
+        self.addSubview(loginButton)
         
-        self.addSubview(bannerView)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
         
-        profileView = UIImageView(frame: CGRect.zero)
-        profileView.backgroundColor = UIColor.gray
-        profileView.layer.borderColor = UIColor.white.cgColor
-        profileView.layer.borderWidth = 1.0
-        profileView.layer.cornerRadius = 5.0
+        titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        loginButton.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         
-        profileView.autoSetDimension(.width, toSize: 124.0)
-        profileView.autoSetDimension(.height, toSize: 124.0)
-        
-        self.addSubview(profileView)
-        
-        segmentedControl = UISegmentedControl(items: ["Tweets", "Media", "Likes"])
-        
-        self.addSubview(segmentedControl)
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            titleLabel.heightAnchor.constraint(equalToConstant: 70),
+            loginButton.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            loginButton.heightAnchor.constraint(equalToConstant: 70)
+        ])
     }
+    
+    public var buttonTargetAction: (Any, Selector)? {
+        didSet {
+            if let targetAction = buttonTargetAction {
+                self.loginButton.addTarget(targetAction.0, action: targetAction.1, for: .touchUpInside)
+            }
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

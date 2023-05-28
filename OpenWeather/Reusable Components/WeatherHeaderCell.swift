@@ -15,15 +15,11 @@ class WeatherHeaderCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        // Set any attributes of your UI components here.
-        cityLabel.text = "Barcelona"
         cityLabel.font = UIFont.systemFont(ofSize: 25)
         cityLabel.translatesAutoresizingMaskIntoConstraints = false
         temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
-        temperatureLabel.text = "25"
         temperatureLabel.font = UIFont.systemFont(ofSize: 75)
         
-        // Add the UI components
         contentView.addSubview(cityLabel)
         contentView.addSubview(temperatureLabel)
         
@@ -35,6 +31,12 @@ class WeatherHeaderCell: UITableViewCell {
             temperatureLabel.topAnchor.constraint(equalTo: cityLabel.bottomAnchor, constant: 10),
             temperatureLabel.heightAnchor.constraint(equalToConstant: 70)
         ])
+    }
+    
+    func updateCell(withModel model: WeatherModel) {
+        guard let firstHour = model.hourly.first else { return }
+        cityLabel.text = model.city
+        temperatureLabel.text = String(format: "%0.0f" + "°", firstHour.temp)
     }
     
     required init?(coder: NSCoder) {

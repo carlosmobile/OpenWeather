@@ -11,6 +11,7 @@ class WeatherViewModel {
     
     var weatherData = Bindable<WeatherModel>()
     var isNecessaryToShowBottomLocationSheet = Bindable<Bool>()
+    var isLoadingData = Bindable<Bool>()
     private let locationManager = LocationManager()
     
     init() {
@@ -24,7 +25,12 @@ class WeatherViewModel {
     @objc func checkLocation() {
         if locationManager.isAuthorizedLocation {
             let coordinates = getLocationCoordinates()
-            fetchWeatherByLocation(lat: coordinates.coordinate.latitude, lon: coordinates.coordinate.longitude)
+            let latitude = coordinates.coordinate.latitude
+            let longitude = coordinates.coordinate.longitude
+            isLoadingData.value = true
+            getLocationPlace(lat: latitude, lon: longitude) { [self] city in
+                fetchWeatherByLocation(lat: latitude, lon: longitude, city: city)
+            }
         }
         isNecessaryToShowBottomLocationSheet.value = !locationManager.isAuthorizedLocation
         print("aaa \(String(describing: isNecessaryToShowBottomLocationSheet.value))")
@@ -38,30 +44,18 @@ class WeatherViewModel {
         return exposedLocation
     }
     
-    func getLocationPlace(lat: CLLocationDegrees, lon: CLLocationDegrees) -> String {
-        
-        var locationPlace = ""
+    func getLocationPlace(lat: CLLocationDegrees, lon: CLLocationDegrees, completion: @escaping (String) -> Void) {
         
         self.locationManager.getPlace(for: CLLocation(latitude: lat, longitude: lon)) { placemark in
             guard let placemark = placemark else { return }
-            
-            var output = "Our location is:"
-            if let country = placemark.country {
-                output = output + "\n\(country)"
-            }
-            if let state = placemark.administrativeArea {
-                output = output + "\n\(state)"
-            }
+
             if let town = placemark.locality {
-                output = output + "\n\(town)"
+                completion(town)
             }
-            locationPlace = output
         }
-        
-        return locationPlace
     }
     
-    func fetchWeatherByLocation(lat: CLLocationDegrees, lon: CLLocationDegrees) {
+    func fetchWeatherByLocation(lat: CLLocationDegrees, lon: CLLocationDegrees, city: String) {
 
         let url = Server().getWeatherURLByLocationWith(latitude: lat, longitude: lon, language: "es")
         let getRequest = APIRequest(method: .get, path: url)
@@ -71,9 +65,13 @@ class WeatherViewModel {
             case .success(let response):
                 if let response = try? response.decode(to: WeatherModel.self) {
                     var responseData = WeatherModel(hourly: [])
-                    responseData.city = self.getLocationPlace(lat: lat, lon: lon)
+                    responseData.city = city
                     responseData.hourly = response.body.hourly
                     self.weatherData.value = responseData
+                    DispatchQueue.main.async {
+                        self.isLoadingData.value = false
+                    }
+                    
                     print("aaa changed weather data fetch")
 //                    print(response.body)
                 }

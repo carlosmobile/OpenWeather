@@ -13,7 +13,8 @@ class WeatherViewController: UIViewController {
     var viewModel: WeatherViewModel = WeatherViewModel()
         
     private let weatherTableView = UITableView()
-    private let bottomLocationSheet = UIView()
+    private let bottomLocationSheet = FooterSheetView()
+    private let spinnerView = SpinnerViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,18 +47,45 @@ class WeatherViewController: UIViewController {
         bottomLocationSheet.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         bottomLocationSheet.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         bottomLocationSheet.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        
+        bottomLocationSheet.buttonTargetAction = (self,#selector(WeatherViewController.sheetButtonAction))
 
         bottomLocationSheet.backgroundColor = .blue
     }
     
+    @objc func sheetButtonAction(sender: UIButton!) {
+        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+        print("Button tapped")
+    }
+    
     private func configureViewModelObserver() {
         viewModel.weatherData.bind { (_) in
-            print("bbb weatherModel updated")
+            DispatchQueue.main.async {
+                self.weatherTableView.reloadData()
+            }
+            
         }
         
         viewModel.isNecessaryToShowBottomLocationSheet.bind { value in
             guard let showBottom = value else { return }
-            self.bottomLocationSheet.isHidden = !showBottom
+            UIView.transition(with: self.view, duration: 0.7, options: [.transitionCrossDissolve], animations: {
+                self.bottomLocationSheet.isHidden = !showBottom
+            }, completion: nil)
+        }
+        
+        viewModel.isLoadingData.bind { [weak self] value in
+            guard let self = self else { return }
+            guard let isLoading = value else { return }
+            if isLoading {
+                addChild(spinnerView)
+                spinnerView.view.frame = view.frame
+                view.addSubview(spinnerView.view)
+                spinnerView.didMove(toParent: self)
+            } else {
+                spinnerView.willMove(toParent: nil)
+                spinnerView.view.removeFromSuperview()
+                spinnerView.removeFromParent()
+            }
         }
     }
 
@@ -87,6 +115,8 @@ extension WeatherViewController: UITableViewDataSource {
             guard let characterListCell = tableView.dequeueReusableCell(withIdentifier: "WeatherHeaderCell") as? WeatherHeaderCell else {
                 return cell
             }
+            guard let weatherData = viewModel.weatherData.value else { return cell }
+            characterListCell.updateCell(withModel: weatherData)
             return characterListCell
         case Table.WeatherByHours.rawValue:
             return cell
