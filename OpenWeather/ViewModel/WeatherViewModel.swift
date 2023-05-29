@@ -52,6 +52,8 @@ class WeatherViewModel {
         }
     }
     
+//MARK: - Openweather API request
+    
     func fetchWeatherByLocation(_ coordinates: CLLocation, city: String, language: String) {
 
         let url = Server().getWeatherURLByLocationWith(coordinates, language: language)

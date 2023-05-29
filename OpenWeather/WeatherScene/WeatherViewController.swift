@@ -10,13 +10,17 @@ import CoreLocation
 
 class WeatherViewController: UIViewController {
     
+    private let refreshTableSpinnerPosition: CGFloat = 20
+    private let locationSheetHeightView: CGFloat = 200
+    private let weatherHeaderCellHeight: CGFloat = 320
+    private let weatherByHoursCellHeight: CGFloat = 240
+    
     var viewModel: WeatherViewModel = WeatherViewModel()
         
     private let weatherTableView = UITableView()
     private let bottomLocationSheet = FooterSheetView()
     private let spinnerView = SpinnerViewController()
-    let refreshControl = UIRefreshControl()
-    let refreshTableSpinnerPosition: CGFloat = 20
+    private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +37,7 @@ class WeatherViewController: UIViewController {
         refreshControl.tintColor = .black
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
-        view.setGradientBackground(colorOne: .cyan, colorTwo: .blue)
+        view.setGradientBackground(firstColor: .cyan, secondColor: .blue)
         weatherTableView.separatorStyle = .none
         weatherTableView.allowsSelection = false
         weatherTableView.backgroundColor = .clear
@@ -51,22 +55,13 @@ class WeatherViewController: UIViewController {
             weatherTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             weatherTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             weatherTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            bottomLocationSheet.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            bottomLocationSheet.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-            bottomLocationSheet.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-            bottomLocationSheet.heightAnchor.constraint(equalToConstant: 200)
+            bottomLocationSheet.leftAnchor.constraint(equalTo: view.leftAnchor),
+            bottomLocationSheet.rightAnchor.constraint(equalTo: view.rightAnchor),
+            bottomLocationSheet.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            bottomLocationSheet.heightAnchor.constraint(equalToConstant: locationSheetHeightView)
         ])
 
         bottomLocationSheet.buttonTargetAction = (self,#selector(WeatherViewController.sheetButtonAction))
-    }
-    
-    @objc private func refresh() {
-        viewModel.checkLocation()
-        refreshControl.endRefreshing()
-    }
-    
-    @objc func sheetButtonAction(sender: UIButton!) {
-        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
     }
     
     private func configureViewModelObserver() {
@@ -88,18 +83,34 @@ class WeatherViewController: UIViewController {
             guard let self = self else { return }
             guard let isLoading = value else { return }
             if isLoading {
-                addChild(spinnerView)
-                spinnerView.view.frame = view.frame
-                view.addSubview(spinnerView.view)
-                spinnerView.didMove(toParent: self)
+                self.addLoaderSpinner()
             } else {
-                spinnerView.willMove(toParent: nil)
-                spinnerView.view.removeFromSuperview()
-                spinnerView.removeFromParent()
+                self.removeLoaderSpinner()
             }
         }
     }
-
+    
+    private func addLoaderSpinner() {
+        addChild(spinnerView)
+        spinnerView.view.frame = view.frame
+        view.addSubview(spinnerView.view)
+        spinnerView.didMove(toParent: self)
+    }
+    
+    private func removeLoaderSpinner() {
+        spinnerView.willMove(toParent: nil)
+        spinnerView.view.removeFromSuperview()
+        spinnerView.removeFromParent()
+    }
+    
+    @objc private func refresh() {
+        viewModel.checkLocation()
+        refreshControl.endRefreshing()
+    }
+    
+    @objc func sheetButtonAction(sender: UIButton!) {
+        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+    }
 }
 
 //MARK: - UITableView Configuration
@@ -124,13 +135,15 @@ extension WeatherViewController: UITableViewDataSource {
 
         switch indexPath.row {
         case Table.WeatherHeader.rawValue:
-            guard let weatherHeaderCell = tableView.dequeueReusableCell(withIdentifier: "WeatherHeaderCell") as? WeatherHeaderCell else {
+            let cellIdentifier = tableView.dequeueReusableCell(withIdentifier: "WeatherHeaderCell")
+            guard let weatherHeaderCell = cellIdentifier as? WeatherHeaderCell else {
                 return cell
             }
             weatherHeaderCell.updateCell(withModel: weatherData)
             return weatherHeaderCell
         case Table.WeatherByHours.rawValue:
-            guard let hourlyListCell = tableView.dequeueReusableCell(withIdentifier: "WeatherHourlyCollection") as? WeatherHourlyCollection else {
+            let cellIdentifier = tableView.dequeueReusableCell(withIdentifier: "WeatherHourlyCollection")
+            guard let hourlyListCell = cellIdentifier as? WeatherHourlyCollection else {
                 return cell
             }
             hourlyListCell.backgroundColor = .clear
@@ -149,9 +162,9 @@ extension WeatherViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
         case Table.WeatherHeader.rawValue:
-            return 320
+            return weatherHeaderCellHeight
         case Table.WeatherByHours.rawValue:
-            return 240
+            return weatherByHoursCellHeight
         default:
             return 0
         }
