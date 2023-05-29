@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  OpenWeather
+
+  Created by Carlos on 29/5/23.
+  
+*/
+
+"loading" = "Loading...";
+"weatherHourly" = "PREVISIÓN POR HORAS";
+"authorizedLocation" = "Se han denegado los permisos localización. Si deseas ver los datos actuales del tiempo en tu ubicación debes activar la ubicación.";
+"goSettings" = "Ir a settings";

@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  OpenWeather
+
+  Created by Carlos on 29/5/23.
+  
+*/
+
+"loading" = "Loading...";
+"weatherHourly" = "HOURLY FORECAST";
+"authorizedLocation" = "Location permissions has been denied. If you want to see the current weather data in your location you must activate the location.";
+"goSettings" = "Go to settings";

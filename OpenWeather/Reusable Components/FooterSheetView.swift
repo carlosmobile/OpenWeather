@@ -15,20 +15,22 @@ class FooterSheetView: UIView {
     override init(frame: CGRect){
         super.init(frame: frame)
         
-        titleLabel.text = "Por favor, da permisos a la localización"
+        titleLabel.text = "authorizedLocation".localized
         titleLabel.textColor = .white
-        loginButton.setTitle("Ir a settings", for: .normal)
+        loginButton.setTitle("goSettings".localized, for: .normal)
         
         self.addSubview(titleLabel)
         self.addSubview(loginButton)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         loginButton.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.textAlignment = .center
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 20),
             titleLabel.heightAnchor.constraint(equalToConstant: 70),
-            titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             loginButton.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
             loginButton.heightAnchor.constraint(equalToConstant: 70),
             loginButton.centerXAnchor.constraint(equalTo: self.centerXAnchor)

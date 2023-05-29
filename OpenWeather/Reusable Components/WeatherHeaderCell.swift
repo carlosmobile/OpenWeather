@@ -21,9 +21,11 @@ class WeatherHeaderCell: UITableViewCell {
     }
     
     func configureUI() {
-        cityLabel.font = UIFont.systemFont(ofSize: 30)
-        temperatureLabel.font = UIFont.systemFont(ofSize: 100)
-        weatherDescription.font = UIFont.systemFont(ofSize: 20)
+        cityLabel.font = UIFont.systemFont(ofSize: 36)
+        temperatureLabel.font = UIFont.systemFont(ofSize: 110)
+        weatherDescription.font = UIFont.systemFont(ofSize: 24)
+        contentView.backgroundColor = .clear
+        self.backgroundColor = .clear
 
         contentView.addSubview(cityLabel)
         contentView.addSubview(containerIconAndTempView)
@@ -36,7 +38,6 @@ class WeatherHeaderCell: UITableViewCell {
         iconWeatherImageView.translatesAutoresizingMaskIntoConstraints = false
         containerIconAndTempView.translatesAutoresizingMaskIntoConstraints = false
         weatherDescription.translatesAutoresizingMaskIntoConstraints = false
-        weatherDescription.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             cityLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
@@ -44,10 +45,10 @@ class WeatherHeaderCell: UITableViewCell {
             weatherDescription.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             containerIconAndTempView.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: 20),
             cityLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
-            cityLabel.heightAnchor.constraint(equalToConstant: 70),
+            cityLabel.heightAnchor.constraint(equalToConstant: 90),
             weatherDescription.topAnchor.constraint(equalTo: containerIconAndTempView.bottomAnchor, constant: 5),
             containerIconAndTempView.topAnchor.constraint(equalTo: cityLabel.bottomAnchor),
-            containerIconAndTempView.heightAnchor.constraint(equalToConstant: 90),
+            containerIconAndTempView.heightAnchor.constraint(equalToConstant: 120),
         ])
         
         iconWeatherImageView.setContentCompressionResistancePriority(temperatureLabel.contentCompressionResistancePriority(for: .horizontal) + 1, for: .horizontal)
@@ -63,7 +64,7 @@ class WeatherHeaderCell: UITableViewCell {
         guard let desc = firstHour.weatherDetail.first?.weatherDescription else { return }
         weatherDescription.text = desc.capitalized + "    " + getHourFromOpenWeatherHourlyDT(dt: firstHour.time)
         guard let icon = firstHour.weatherDetail.first?.icon else { return }
-        iconWeatherImageView.load(url: getIconURLFromIconName(icon: icon))
+        iconWeatherImageView.downloadImageWithThirdPartyLibrary(fromUrl: getIconURLFromIconName(icon: icon))
         iconWeatherImageView.contentMode = .scaleAspectFit
     }
     

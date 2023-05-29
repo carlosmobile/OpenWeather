@@ -15,6 +15,8 @@ class WeatherViewController: UIViewController {
     private let weatherTableView = UITableView()
     private let bottomLocationSheet = FooterSheetView()
     private let spinnerView = SpinnerViewController()
+    let refreshControl = UIRefreshControl()
+    let refreshTableSpinnerPosition: CGFloat = 20
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,9 +29,17 @@ class WeatherViewController: UIViewController {
     }
     
     private func configureUI() {
-                
-        weatherTableView.register(WeatherHeaderCell.self, forCellReuseIdentifier: "WeatherHeaderCell")
+        refreshControl.bounds.origin.y = refreshTableSpinnerPosition
+        refreshControl.tintColor = .black
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
+        view.setGradientBackground(colorOne: .cyan, colorTwo: .blue)
+        weatherTableView.separatorStyle = .none
+        weatherTableView.allowsSelection = false
+        weatherTableView.backgroundColor = .clear
+        weatherTableView.register(WeatherHeaderCell.self, forCellReuseIdentifier: "WeatherHeaderCell")
+        weatherTableView.register(WeatherHourlyCollection.self, forCellReuseIdentifier: "WeatherHourlyCollection")
+        weatherTableView.addSubview(refreshControl)
         view.addSubview(weatherTableView)
         view.addSubview(bottomLocationSheet)
         
@@ -46,10 +56,13 @@ class WeatherViewController: UIViewController {
             bottomLocationSheet.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
             bottomLocationSheet.heightAnchor.constraint(equalToConstant: 200)
         ])
-        
-        bottomLocationSheet.buttonTargetAction = (self,#selector(WeatherViewController.sheetButtonAction))
 
-        bottomLocationSheet.backgroundColor = .blue
+        bottomLocationSheet.buttonTargetAction = (self,#selector(WeatherViewController.sheetButtonAction))
+    }
+    
+    @objc private func refresh() {
+        viewModel.checkLocation()
+        refreshControl.endRefreshing()
     }
     
     @objc func sheetButtonAction(sender: UIButton!) {
@@ -86,6 +99,7 @@ class WeatherViewController: UIViewController {
             }
         }
     }
+
 }
 
 //MARK: - UITableView Configuration
@@ -106,17 +120,22 @@ extension WeatherViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = UITableViewCell()
+        guard let weatherData = viewModel.weatherData.value else { return cell }
 
-        switch indexPath.section {
+        switch indexPath.row {
         case Table.WeatherHeader.rawValue:
-            guard let characterListCell = tableView.dequeueReusableCell(withIdentifier: "WeatherHeaderCell") as? WeatherHeaderCell else {
+            guard let weatherHeaderCell = tableView.dequeueReusableCell(withIdentifier: "WeatherHeaderCell") as? WeatherHeaderCell else {
                 return cell
             }
-            guard let weatherData = viewModel.weatherData.value else { return cell }
-            characterListCell.updateCell(withModel: weatherData)
-            return characterListCell
+            weatherHeaderCell.updateCell(withModel: weatherData)
+            return weatherHeaderCell
         case Table.WeatherByHours.rawValue:
-            return cell
+            guard let hourlyListCell = tableView.dequeueReusableCell(withIdentifier: "WeatherHourlyCollection") as? WeatherHourlyCollection else {
+                return cell
+            }
+            hourlyListCell.backgroundColor = .clear
+            hourlyListCell.updateCellWith(hourlyWeather: weatherData.hourly)
+            return hourlyListCell
         default:
             return cell
         }
@@ -126,13 +145,15 @@ extension WeatherViewController: UITableViewDataSource {
 //MARK: - UITableViewDelegate
 
 extension WeatherViewController: UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        print("tapped")
-    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
+        switch indexPath.row {
+        case Table.WeatherHeader.rawValue:
+            return 320
+        case Table.WeatherByHours.rawValue:
+            return 240
+        default:
+            return 0
+        }
     }
 }

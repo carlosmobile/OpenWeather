@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  OpenWeather
+
+  Created by Carlos on 29/5/23.
+  
+*/
+
+"NSLocationWhenInUseUsageDescription" = "It will be used to display weather data for your current location.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "It will be used to display weather data for your current location.";

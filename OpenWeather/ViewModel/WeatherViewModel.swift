@@ -25,11 +25,9 @@ class WeatherViewModel {
     @objc func checkLocation() {
         if locationManager.isAuthorizedLocation {
             let coordinates = getLocationCoordinates()
-            let latitude = coordinates.coordinate.latitude
-            let longitude = coordinates.coordinate.longitude
             isLoadingData.value = true
-            getLocationPlace(lat: latitude, lon: longitude) { [self] city in
-                fetchWeatherByLocation(lat: latitude, lon: longitude, city: city)
+            getLocationPlace(coordinates) { [self] city in
+                fetchWeatherByLocation(coordinates, city: city, language: Locale.preferredLanguageCode)
             }
         }
         isNecessaryToShowBottomLocationSheet.value = !locationManager.isAuthorizedLocation
@@ -43,9 +41,9 @@ class WeatherViewModel {
         return exposedLocation
     }
     
-    func getLocationPlace(lat: CLLocationDegrees, lon: CLLocationDegrees, completion: @escaping (String) -> Void) {
-        
-        self.locationManager.getPlace(for: CLLocation(latitude: lat, longitude: lon)) { placemark in
+    func getLocationPlace(_ coordinates: CLLocation, completion: @escaping (String) -> Void) {
+        self.locationManager.getPlace(for: CLLocation(latitude: coordinates.coordinate.latitude,
+                                                      longitude: coordinates.coordinate.longitude)) { placemark in
             guard let placemark = placemark else { return }
 
             if let town = placemark.locality {
@@ -54,9 +52,9 @@ class WeatherViewModel {
         }
     }
     
-    func fetchWeatherByLocation(lat: CLLocationDegrees, lon: CLLocationDegrees, city: String) {
+    func fetchWeatherByLocation(_ coordinates: CLLocation, city: String, language: String) {
 
-        let url = Server().getWeatherURLByLocationWith(latitude: lat, longitude: lon, language: "es")
+        let url = Server().getWeatherURLByLocationWith(coordinates, language: language)
         let getRequest = APIRequest(method: .get, path: url)
 
         APIClient().perform(request: getRequest) { result in

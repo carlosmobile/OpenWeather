@@ -14,7 +14,9 @@ struct Server {
     private let exclude = "daily,minutely,current,alerts"
     private let metric = "metric"
     
-    func getWeatherURLByLocationWith(latitude: CLLocationDegrees, longitude: CLLocationDegrees, language: String) -> String {
+    func getWeatherURLByLocationWith(_ coordinates: CLLocation, language: String) -> String {
+        let longitude = coordinates.coordinate.longitude
+        let latitude = coordinates.coordinate.latitude
         let weatherURL = "\(baseURL)lat=\(latitude)&lon=\(longitude)&exclude=\(exclude)&units=\(metric)&appid=\(apiKey)&lang=\(language)"
         return weatherURL
     }
