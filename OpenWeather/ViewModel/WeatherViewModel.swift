@@ -37,7 +37,9 @@ class WeatherViewModel {
         
         if isAuthorizedLocation {
             let coordinates = getLocationCoordinates()
+#if !TESTING
             isLoadingData.value = isUpdateData ? false : true
+#endif
             getLocationPlace(coordinates) { [self] city in
                 fetchWeatherByLocation(coordinates, city: city, language: Locale.preferredLanguageCode)
             }

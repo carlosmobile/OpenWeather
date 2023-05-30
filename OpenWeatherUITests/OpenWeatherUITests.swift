@@ -17,14 +17,14 @@ final class OpenWeatherUITests: XCTestCase {
         app.launch()
     }
 
-    func testPullToRefresh() {
+    func testPullToRefreshMainWeatherView() {
         let firstCell = app.tables.children(matching: .cell).element(boundBy: 0)
         let start = firstCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
         let finish = firstCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 6))
         start.press(forDuration: 0, thenDragTo: finish)
     }
 
-    func testShowCharacterDetail() {
+    func testScrollHourlyWeatherDetail() {
         app.tables.cells.firstMatch.tap()
         let cell = app.tables.children(matching: .cell).element(boundBy: 1)
         cell.swipeLeft()
