@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum AlertFooterSheetType {
+    case internetAlert
+    case locationAlert
+}
+
 class FooterSheetView: UIView {
     
     private let buttonTopOffet: CGFloat = 10
@@ -14,17 +19,15 @@ class FooterSheetView: UIView {
     private let heightOffset: CGFloat = 70
     private let widthOffset: CGFloat = 140
     
-    private let titleLabel = UILabel()
-    private lazy var button = UIButton()
+    let titleLabel = UILabel()
+    lazy var button = UIButton()
     
-    override init(frame: CGRect){
+    override init(frame: CGRect) {
         super.init(frame: frame)
         
-        titleLabel.text = "authorizedLocation".localized
         titleLabel.textColor = ThemeColor.black.OWColor
         titleLabel.numberOfLines = 0
         titleLabel.lineBreakMode = .byWordWrapping
-        button.setTitle("goSettings".localized, for: .normal)
         button.setTitleColor(ThemeColor.black.OWColor, for: .normal)
         button.layer.borderWidth = 1.0
         button.layer.borderColor = ThemeColor.black.OWColor.cgColor
@@ -56,6 +59,17 @@ class FooterSheetView: UIView {
             if let targetAction = buttonTargetAction {
                 self.button.addTarget(targetAction.0, action: targetAction.1, for: .touchUpInside)
             }
+        }
+    }
+    
+    public func configureFooterSheetTextWith(alertType: AlertFooterSheetType) {
+        switch alertType {
+        case AlertFooterSheetType.internetAlert:
+            titleLabel.text = "connectionFailedMessage".localized
+            button.setTitle("retry".localized, for: .normal)
+        case AlertFooterSheetType.locationAlert:
+            titleLabel.text = "authorizedLocation".localized
+            button.setTitle("goSettings".localized, for: .normal)
         }
     }
     

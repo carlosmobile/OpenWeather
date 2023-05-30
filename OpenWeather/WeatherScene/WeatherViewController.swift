@@ -18,7 +18,7 @@ class WeatherViewController: UIViewController {
     var viewModel: WeatherViewModel = WeatherViewModel()
         
     private let weatherTableView = UITableView()
-    private let bottomLocationSheet = FooterSheetView()
+    private let footerSheetView = FooterSheetView()
     private let spinnerView = SpinnerViewController()
     private let refreshControl = UIRefreshControl()
     
@@ -45,24 +45,24 @@ class WeatherViewController: UIViewController {
         weatherTableView.addSubview(refreshControl)
         
         view.addSubview(weatherTableView)
-        view.addSubview(bottomLocationSheet)
-        bottomLocationSheet.isHidden = true
+        view.addSubview(footerSheetView)
+        footerSheetView.isHidden = true
         view.backgroundColor = ThemeColor.white.OWColor
         weatherTableView.translatesAutoresizingMaskIntoConstraints = false
-        bottomLocationSheet.translatesAutoresizingMaskIntoConstraints = false
+        footerSheetView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             weatherTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             weatherTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             weatherTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             weatherTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            bottomLocationSheet.leftAnchor.constraint(equalTo: view.leftAnchor),
-            bottomLocationSheet.rightAnchor.constraint(equalTo: view.rightAnchor),
-            bottomLocationSheet.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            bottomLocationSheet.heightAnchor.constraint(equalToConstant: locationSheetHeightView)
+            footerSheetView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            footerSheetView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            footerSheetView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            footerSheetView.heightAnchor.constraint(equalToConstant: locationSheetHeightView)
         ])
 
-        bottomLocationSheet.buttonTargetAction = (self,#selector(WeatherViewController.sheetButtonAction))
+        footerSheetView.buttonTargetAction = (self,#selector(WeatherViewController.sheetButtonAction))
     }
     
     private func configureViewModelObserver() {
@@ -74,8 +74,9 @@ class WeatherViewController: UIViewController {
         
         viewModel.isNecessaryToShowBottomLocationSheet.bind { value in
             guard let showBottom = value else { return }
+            self.footerSheetView.configureFooterSheetTextWith(alertType: self.viewModel.footerSheetType)
             UIView.transition(with: self.view, duration: 0.7, options: [.transitionCrossDissolve], animations: {
-                self.bottomLocationSheet.isHidden = !showBottom
+                self.footerSheetView.isHidden = !showBottom
             }, completion: nil)
         }
         
@@ -106,12 +107,12 @@ class WeatherViewController: UIViewController {
     }
     
     @objc private func refresh() {
-        viewModel.checkLocation()
+        viewModel.refreshWeatherData()
         refreshControl.endRefreshing()
     }
     
     @objc func sheetButtonAction(sender: UIButton!) {
-        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+        viewModel.setFooterSheetAlertNavigation()
     }
 }
 

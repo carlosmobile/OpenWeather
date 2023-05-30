@@ -10,3 +10,5 @@
 "weatherHourly" = "PREVISIÓN POR HORAS";
 "authorizedLocation" = "Se han denegado el permiso de localización. Se debe autorizar en settings para ver los datos del tiempo.";
 "goSettings" = "Ir a settings";
+"retry" = "Reintentar";
+"connectionFailedMessage" = "La conexión a internet ha fallado";

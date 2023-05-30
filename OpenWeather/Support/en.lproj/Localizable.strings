@@ -10,3 +10,5 @@
 "weatherHourly" = "HOURLY FORECAST";
 "authorizedLocation" = "Location permissions has been denied. It must be authorized in settings to see the weather data.";
 "goSettings" = "Go to settings";
+"retry" = "Retry";
+"connectionFailedMessage" = "There may be a problem in your internet connection";

@@ -6,12 +6,16 @@
 //
 
 import CoreLocation
+import UIKit
 
 class WeatherViewModel {
     
     var weatherData = Bindable<WeatherModel>()
     var isNecessaryToShowBottomLocationSheet = Bindable<Bool>()
     var isLoadingData = Bindable<Bool>()
+    var isUpdateData = false
+    var footerSheetType: AlertFooterSheetType = .locationAlert
+    
     private let locationManager = LocationManager()
     
     init() {
@@ -23,17 +27,42 @@ class WeatherViewModel {
     }
     
     @objc func checkLocation() {
+        if !hasInternetConnection() {
+            footerSheetType = .internetAlert
+            isNecessaryToShowBottomLocationSheet.value = true
+            return
+        }
+        
         guard let isAuthorizedLocation = locationManager.isAuthorizedLocation else { return }
         
         if isAuthorizedLocation {
             let coordinates = getLocationCoordinates()
-            isLoadingData.value = true
+            isLoadingData.value = isUpdateData ? false : true
             getLocationPlace(coordinates) { [self] city in
                 fetchWeatherByLocation(coordinates, city: city, language: Locale.preferredLanguageCode)
             }
         }
         
+        footerSheetType = .locationAlert
         isNecessaryToShowBottomLocationSheet.value = !isAuthorizedLocation
+    }
+    
+    func refreshWeatherData() {
+        isUpdateData = true
+        checkLocation()
+    }
+    
+    func hasInternetConnection() -> Bool {
+        return OWReachability.isConnected()
+    }
+    
+    func setFooterSheetAlertNavigation() {
+        switch footerSheetType {
+        case .internetAlert:
+            checkLocation()
+        case .locationAlert:
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+        }
     }
     
     func getLocationCoordinates() -> CLLocation {
