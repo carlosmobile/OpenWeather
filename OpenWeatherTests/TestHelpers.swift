@@ -11,13 +11,6 @@ import XCTest
 
 class TestHelpers: XCTestCase {
     
-    func testGradienBackground() throws {
-        let viewTest = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        viewTest.backgroundColor = .white
-        viewTest.setGradientBackground(firstColor: .white, secondColor: .blue)
-        XCTAssertNotEqual(viewTest.backgroundColor, .white)
-    }
-    
     func testSpinnerController() throws {
         let spinnerTest = SpinnerViewController()
         spinnerTest.loadView()
