@@ -11,7 +11,7 @@ import CoreLocation
 class LocationManager: NSObject {
     
     private let locationManager = CLLocationManager()
-    var isAuthorizedLocation: Bool = false
+    var isAuthorizedLocation: Bool?
     
     public var exposedLocation: CLLocation? {
         return self.locationManager.location

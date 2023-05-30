@@ -12,7 +12,7 @@ extension UIView {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = bounds
         gradientLayer.colors = [firstColor.cgColor, secondColor.cgColor]
-        gradientLayer.locations = [0, 3.0]
+        gradientLayer.locations = [0, 4.0]
         layer.insertSublayer(gradientLayer, at: 0)
     }
 }

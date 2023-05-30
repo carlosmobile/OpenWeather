@@ -6,7 +6,7 @@
   
 */
 
-"loading" = "Loading...";
+"loading" = "Cargando datos desde OpenWeather";
 "weatherHourly" = "PREVISIÓN POR HORAS";
-"authorizedLocation" = "Se han denegado los permisos localización. Si deseas ver los datos actuales del tiempo en tu ubicación debes activar la ubicación.";
+"authorizedLocation" = "Se han denegado los permisos localización.Si deseas ver los datos actuales del tiempo en tu ubicación debes activar la ubicación.";
 "goSettings" = "Ir a settings";

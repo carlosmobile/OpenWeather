@@ -1,8 +1,8 @@
 //
-//  SubclassedCollectionViewCell.swift
-//  ProgrammaticUICollectionView
+//  WeatherHourlyCell.swift
+//  WeatherHourlyCell
 //
-//  Created by Steven Curtis on 13/11/2020.
+//  Created by Carlos on 26/5/23.
 //
 
 import UIKit
@@ -42,11 +42,11 @@ class WeatherHourlyCell: UICollectionViewCell {
         backgroundCellView.addSubview(weatherDescriptionLabel)
         backgroundCellView.addSubview(iconWeatherImageView)
         backgroundCellView.addSubview(temperatureLabel)
-        backgroundCellView.backgroundColor = .white
+        backgroundCellView.backgroundColor = ThemeColor.white.OWColor
         
         backgroundCellView.layer.cornerRadius = backgroundCellViewCornerRadius
         backgroundCellView.layer.borderWidth = 0.0
-        backgroundCellView.layer.shadowColor = UIColor.lightGray.cgColor
+        backgroundCellView.layer.shadowColor = ThemeColor.grayLight.OWColor.cgColor
         backgroundCellView.layer.shadowOffset = CGSize(width: 0, height: 0)
         backgroundCellView.layer.shadowRadius = backgroundCellViewShadowRadius
         backgroundCellView.layer.shadowOpacity = 0.7
@@ -81,7 +81,7 @@ class WeatherHourlyCell: UICollectionViewCell {
         temperatureLabel.text = String(format: "%0.0f" + "°", model.temp)
         
         guard let desc = model.weatherDetail.first?.weatherDescription else { return }
-        weatherDescriptionLabel.text = desc.capitalized
+        weatherDescriptionLabel.text = desc.capitalizedSentence
         weatherTimeLabel.text = getHourFromOpenWeatherHourlyDT(dt: model.time)
         
         guard let icon = model.weatherDetail.first?.icon else { return }

@@ -12,8 +12,9 @@
 		076981112A24227F0057A0A8 /* WeatherHourlyCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0769810F2A24227F0057A0A8 /* WeatherHourlyCollection.swift */; };
 		0769811B2A2423B20057A0A8 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 0769811A2A2423B20057A0A8 /* Kingfisher */; };
 		076981232A24357D0057A0A8 /* WeatherHourlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076981222A24357D0057A0A8 /* WeatherHourlyCell.swift */; };
+		0776ACCF2A25762500E35C9A /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0776ACCE2A25762500E35C9A /* ThemeManager.swift */; };
 		078497182A2512FB00925E3C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0784971A2A2512FB00925E3C /* Localizable.strings */; };
-		0784971D2A25132B00925E3C /* Localized+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0784971C2A25132B00925E3C /* Localized+String.swift */; };
+		0784971D2A25132B00925E3C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0784971C2A25132B00925E3C /* String+Extension.swift */; };
 		0784971F2A25134A00925E3C /* UIView+GradientColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0784971E2A25134A00925E3C /* UIView+GradientColor.swift */; };
 		078497212A25138B00925E3C /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078497202A25138B00925E3C /* UIImageView+DownloadImage.swift */; };
 		078497232A2513AE00925E3C /* Locale+LanguageCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078497222A2513AE00925E3C /* Locale+LanguageCode.swift */; };
@@ -64,10 +65,11 @@
 		0769810C2A23BD1D0057A0A8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		0769810F2A24227F0057A0A8 /* WeatherHourlyCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherHourlyCollection.swift; sourceTree = "<group>"; };
 		076981222A24357D0057A0A8 /* WeatherHourlyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherHourlyCell.swift; sourceTree = "<group>"; };
+		0776ACCE2A25762500E35C9A /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		078497152A2512A400925E3C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		078497192A2512FB00925E3C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0784971B2A2512FF00925E3C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		0784971C2A25132B00925E3C /* Localized+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Localized+String.swift"; sourceTree = "<group>"; };
+		0784971C2A25132B00925E3C /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		0784971E2A25134A00925E3C /* UIView+GradientColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+GradientColor.swift"; sourceTree = "<group>"; };
 		078497202A25138B00925E3C /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
 		078497222A2513AE00925E3C /* Locale+LanguageCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Locale+LanguageCode.swift"; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 			children = (
 				078497292A252A5600925E3C /* Info.plist */,
 				07CDC4902A2137E100FB1B83 /* AppDelegate.swift */,
+				0776ACCE2A25762500E35C9A /* ThemeManager.swift */,
 				07CDC4992A2137E300FB1B83 /* Assets.xcassets */,
 				07CDC49B2A2137E300FB1B83 /* LaunchScreen.storyboard */,
 				0784971A2A2512FB00925E3C /* Localizable.strings */,
@@ -246,7 +249,7 @@
 				07CDC4C22A21395100FB1B83 /* Bindable.swift */,
 				07CDC4E22A22671900FB1B83 /* LocationManager.swift */,
 				0769810A2A23731A0057A0A8 /* SpinnerController.swift */,
-				0784971C2A25132B00925E3C /* Localized+String.swift */,
+				0784971C2A25132B00925E3C /* String+Extension.swift */,
 				0784971E2A25134A00925E3C /* UIView+GradientColor.swift */,
 				078497202A25138B00925E3C /* UIImageView+DownloadImage.swift */,
 				078497222A2513AE00925E3C /* Locale+LanguageCode.swift */,
@@ -404,6 +407,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0776ACCF2A25762500E35C9A /* ThemeManager.swift in Sources */,
 				07CDC4DB2A21831900FB1B83 /* APIResponse.swift in Sources */,
 				076981112A24227F0057A0A8 /* WeatherHourlyCollection.swift in Sources */,
 				07CDC4CE2A21769100FB1B83 /* WeatherHeaderCell.swift in Sources */,
@@ -420,7 +424,7 @@
 				07CDC4C92A213A7500FB1B83 /* WeatherViewController.swift in Sources */,
 				07CDC4DD2A21831900FB1B83 /* APIConfiguration.swift in Sources */,
 				07CDC4D12A21774800FB1B83 /* WeatherModel.swift in Sources */,
-				0784971D2A25132B00925E3C /* Localized+String.swift in Sources */,
+				0784971D2A25132B00925E3C /* String+Extension.swift in Sources */,
 				07CDC4DF2A21831900FB1B83 /* APIRequest.swift in Sources */,
 				07CDC4DC2A21831900FB1B83 /* APIError.swift in Sources */,
 				07CDC4C32A21395100FB1B83 /* Bindable.swift in Sources */,

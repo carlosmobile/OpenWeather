@@ -12,6 +12,7 @@ class FooterSheetView: UIView {
     private let buttonTopOffet: CGFloat = 10
     private let titleLabelBorderOffset: CGFloat = 20
     private let heightOffset: CGFloat = 70
+    private let widthOffset: CGFloat = 140
     
     private let titleLabel = UILabel()
     private lazy var button = UIButton()
@@ -20,8 +21,16 @@ class FooterSheetView: UIView {
         super.init(frame: frame)
         
         titleLabel.text = "authorizedLocation".localized
-        titleLabel.textColor = .white
+        titleLabel.textColor = ThemeColor.black.OWColor
+        titleLabel.numberOfLines = 0
+        titleLabel.lineBreakMode = .byWordWrapping
         button.setTitle("goSettings".localized, for: .normal)
+        button.setTitleColor(ThemeColor.black.OWColor, for: .normal)
+        button.layer.borderWidth = 1.0
+        button.layer.borderColor = ThemeColor.black.OWColor.cgColor
+        button.layer.cornerRadius = 15
+        
+        self.backgroundColor = ThemeColor.white.OWColor
         
         self.addSubview(titleLabel)
         self.addSubview(button)
@@ -32,11 +41,12 @@ class FooterSheetView: UIView {
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: titleLabelBorderOffset),
-            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: titleLabelBorderOffset),
-            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: titleLabelBorderOffset),
+            titleLabel.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor, constant: titleLabelBorderOffset),
+            titleLabel.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor, constant: -titleLabelBorderOffset),
             titleLabel.heightAnchor.constraint(equalToConstant: heightOffset),
             button.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: buttonTopOffet),
             button.heightAnchor.constraint(equalToConstant: heightOffset),
+            button.widthAnchor.constraint(equalToConstant: widthOffset),
             button.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
     }

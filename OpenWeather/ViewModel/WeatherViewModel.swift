@@ -23,14 +23,17 @@ class WeatherViewModel {
     }
     
     @objc func checkLocation() {
-        if locationManager.isAuthorizedLocation {
+        guard let isAuthorizedLocation = locationManager.isAuthorizedLocation else { return }
+        
+        if isAuthorizedLocation {
             let coordinates = getLocationCoordinates()
             isLoadingData.value = true
             getLocationPlace(coordinates) { [self] city in
                 fetchWeatherByLocation(coordinates, city: city, language: Locale.preferredLanguageCode)
             }
         }
-        isNecessaryToShowBottomLocationSheet.value = !locationManager.isAuthorizedLocation
+        
+        isNecessaryToShowBottomLocationSheet.value = !isAuthorizedLocation
     }
     
     func getLocationCoordinates() -> CLLocation {

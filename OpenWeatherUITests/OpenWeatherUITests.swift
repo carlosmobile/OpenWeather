@@ -7,7 +7,7 @@
 
 import XCTest
 
-class OpenWeatherUITests: XCTestCase {
+final class OpenWeatherUITests: XCTestCase {
 
     var app: XCUIApplication!
 

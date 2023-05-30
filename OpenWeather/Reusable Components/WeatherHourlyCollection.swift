@@ -14,13 +14,13 @@ class WeatherHourlyCollection: UITableViewCell, UICollectionViewDataSource {
 
     private let categoryLabelHeight: CGFloat = 20
     private let categoryLabelFontSize: CGFloat = 14
-    private let categoryLabelLeadingOffset: CGFloat = 14
+    private let categoryLabelLeadingOffset: CGFloat = 16
     private let collectionTopOffset = 20
     private let collectionViewHeight = 200
     private let collectionCellWidth = 120
     private let collectionCellHeight = 180
-    private let collectionCellMinimumLineSpacing: CGFloat = 20
-    private let collectionMinimumInteritemSpacing: CGFloat = 5
+    private let collectionCellMinimumLineSpacing: CGFloat = 16
+    private let collectionMinimumInteritemSpacing: CGFloat = 10
 
     var hourlyData = [WeatherHourly]()
 
@@ -34,7 +34,7 @@ class WeatherHourlyCollection: UITableViewCell, UICollectionViewDataSource {
     }
 
     private func configureUI() {
-        categoryLabel.textColor = .black
+        categoryLabel.textColor = ThemeColor.black.OWColor
         categoryLabel.text = "weatherHourly".localized
         categoryLabel.font = UIFont.systemFont(ofSize: categoryLabelFontSize)
         
@@ -56,7 +56,6 @@ class WeatherHourlyCollection: UITableViewCell, UICollectionViewDataSource {
                                           collectionViewLayout: flowLayout)
         collectionView?.showsHorizontalScrollIndicator = false
         collectionView?.backgroundColor = .clear
-        collectionView?.accessibilityIdentifier = "hourlyCollection"
         collectionView?.dataSource = self
         collectionView?.delegate = self
         collectionView?.register(WeatherHourlyCell.self, forCellWithReuseIdentifier: "WeatherHourlyCell")

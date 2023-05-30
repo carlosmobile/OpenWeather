@@ -34,19 +34,20 @@ class WeatherViewController: UIViewController {
     
     private func configureUI() {
         refreshControl.bounds.origin.y = refreshTableSpinnerPosition
-        refreshControl.tintColor = .black
+        refreshControl.tintColor = ThemeColor.black.OWColor
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
-        view.setGradientBackground(firstColor: .cyan, secondColor: .blue)
         weatherTableView.separatorStyle = .none
         weatherTableView.allowsSelection = false
         weatherTableView.backgroundColor = .clear
         weatherTableView.register(WeatherHeaderCell.self, forCellReuseIdentifier: "WeatherHeaderCell")
         weatherTableView.register(WeatherHourlyCollection.self, forCellReuseIdentifier: "WeatherHourlyCollection")
         weatherTableView.addSubview(refreshControl)
+        
         view.addSubview(weatherTableView)
         view.addSubview(bottomLocationSheet)
-        
+        bottomLocationSheet.isHidden = true
+        view.backgroundColor = ThemeColor.white.OWColor
         weatherTableView.translatesAutoresizingMaskIntoConstraints = false
         bottomLocationSheet.translatesAutoresizingMaskIntoConstraints = false
         
@@ -69,7 +70,6 @@ class WeatherViewController: UIViewController {
             DispatchQueue.main.async {
                 self.weatherTableView.reloadData()
             }
-            
         }
         
         viewModel.isNecessaryToShowBottomLocationSheet.bind { value in
@@ -85,6 +85,8 @@ class WeatherViewController: UIViewController {
             if isLoading {
                 self.addLoaderSpinner()
             } else {
+                view.setGradientBackground(firstColor: ThemeColor.cyan.OWColor,
+                                           secondColor: ThemeColor.white.OWColor)
                 self.removeLoaderSpinner()
             }
         }

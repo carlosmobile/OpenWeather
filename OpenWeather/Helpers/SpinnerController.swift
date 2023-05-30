@@ -8,17 +8,36 @@
 import UIKit
 
 class SpinnerViewController: UIViewController {
-    var spinner = UIActivityIndicatorView(style: .whiteLarge)
+    
+    private let titleLabelFontSize: CGFloat = 14
+    private let titleLabelOffset: CGFloat = 15
+    
+    private let spinner = UIActivityIndicatorView(style: .gray)
+    private let titleLabel = UILabel()
 
     override func loadView() {
         view = UIView()
-        view.backgroundColor = UIColor(white: 0, alpha: 0.7)
+        view.backgroundColor = ThemeColor.white.OWColor
+        titleLabel.text = "loading".localized
+        titleLabel.font = UIFont.systemFont(ofSize: titleLabelFontSize)
+        titleLabel.textColor = ThemeColor.black.OWColor
+        titleLabel.textAlignment = .center
+        titleLabel.numberOfLines = 2
+        titleLabel.lineBreakMode = .byWordWrapping
+        spinner.color = .black
 
         spinner.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         spinner.startAnimating()
         view.addSubview(spinner)
+        view.addSubview(titleLabel)
 
-        spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            titleLabel.topAnchor.constraint(equalTo: spinner.bottomAnchor, constant: titleLabelOffset),
+            titleLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -titleLabelOffset),
+            titleLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: titleLabelOffset)
+        ])
     }
 }

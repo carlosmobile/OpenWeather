@@ -52,7 +52,6 @@ class WeatherHeaderCell: UITableViewCell {
             cityLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             containerIconAndTempView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             weatherDescriptionLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            containerIconAndTempView.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: containerIconAndTempViewLeadingOffset),
             cityLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: cityLabelTopOffset),
             cityLabel.heightAnchor.constraint(equalToConstant: cityLabelHeightConstant),
             weatherDescriptionLabel.topAnchor.constraint(equalTo: containerIconAndTempView.bottomAnchor, constant: weatherDescriptionTopOffset),
@@ -71,7 +70,7 @@ class WeatherHeaderCell: UITableViewCell {
         cityLabel.text = model.city
         temperatureLabel.text = String(format: "%0.0f" + "°", firstHour.temp)
         guard let desc = firstHour.weatherDetail.first?.weatherDescription else { return }
-        weatherDescriptionLabel.text = desc.capitalized + "    " + getHourFromOpenWeatherHourlyDT(dt: firstHour.time)
+        weatherDescriptionLabel.text = desc.capitalizedSentence + "    " + getHourFromOpenWeatherHourlyDT(dt: firstHour.time)
         guard let icon = firstHour.weatherDetail.first?.icon else { return }
         iconWeatherImageView.downloadImageWithThirdPartyLibrary(fromUrl: getIconURLFromIconName(icon: icon))
         iconWeatherImageView.contentMode = .scaleAspectFit
