@@ -1,27 +1,27 @@
 # OpenWeather app example
 
-This demo app support iPhone and iPad layouts and implements a open weather view.
-<br>
-This app is compatible with iOS 11 or higher.
-<br>
-The app uses swift package manager for dependency management.
-<br>
-All the user interface has been done using swift code. No Storyboards or xibs have been used.
-<br>
-The app has nit test and ui test with a coverage of 93%.
-<br>
 Open weather view consists on a list of data hourly weather in your localization. The header of the view has a big view with the city name, the temperature, the current time, the icon and the description. Below the header, the view has an horizontal collection with weather next hours with the same info but in minor size.
 <br><br>
-Open weather app meets the following requirements:
-Supports Spanish and English languages. Gets the language that the user has selected in iOS.
-Location support: Gets the coordinates and city name of the user's device. To do this, manage location permissions, following Apple's guidelines, using the own iOS libraries.
-The app obtains the data from the Open Weather weather service. Get the hourly forecast for today. The app handle internet connection error control too.
-Once the main screen is loaded, it allows you to reload the data by scrolling.
+
+- This demo app support iPhone and iPad layouts and implements a open weather view.<br>
+- This app is compatible with iOS 11 or higher.<br>
+- The app uses swift package manager for dependency management.<br>
+- All the user interface has been done using swift code. No Storyboards or xibs have been used.<br>
+- The app has nit test and ui test with a coverage of 93%.
+<br><br>
+
+Open weather app meets the following requirements:<br>
+- Supports Spanish and English languages. Gets the language that the user has selected in iOS.<br>
+- Location support: Gets the coordinates and city name of the user's device. 
+- Manage location permissions, following Apple's guidelines, using the own iOS libraries.<br>
+- The app obtains the data from the Open Weather weather service. Getting the hourly forecast for today.<br> 
+- The app handle internet connection error control too.<br>
+- Once the main screen is loaded, it allows you to reload the data by scrolling.<br>
 <br><br>
 • [WeatherViewController](https://github.com/carlosmobile/OpenWeather/blob/main/OpenWeather/WeatherScene/WeatherViewController.swift): Weather main view.<br>
 • [WeatherViewModel](https://github.com/carlosmobile/OpenWeather/blob/main/OpenWeather/ViewModel/WeatherViewModel.swift): Weather viewModel.<br>
 
-<br><br>
+<br>
   
 Example gifs with iPhone 14 Xcode simulator:
 
@@ -30,7 +30,7 @@ Example gifs with iPhone 14 Xcode simulator:
 <img src="readme_images/iphone_location.gif"  alt="openweather" width = 250 height = 542px >    <img src="readme_images/iphone_internet.gif"  alt="openweather" width = 250 height = 542px > 
 
 <br><br>
-Example gif with iPad Pro (11 inch) Xcode simulator:
+Example image with iPad Pro (11 inch) Xcode simulator:
  
  <img src="readme_images/ipad.png"  alt="openweather" width = 441 height = 630px > 
  
@@ -68,7 +68,7 @@ This architecture has been used because it's considered an advance architecture 
 
 # Common
 
-- [WeatherHeaderCell](https://github.com/carlosmobile/OpenWeather/blob/main/OpenWeather/Reusable%20Components/WeatherHeaderCell.swift): To show big header current weather.<br><br>
+- [WeatherHeaderCell](https://github.com/carlosmobile/OpenWeather/blob/main/OpenWeather/Reusable%20Components/WeatherHeaderCell.swift): To show big header current weather.<br>
 - [WeatherHourlyCollection](https://github.com/carlosmobile/OpenWeather/blob/main/OpenWeather/Reusable%20Components/WeatherHourlyCollection.swift): To load a collection with hourly weather.<br>
 - [WeatherHourlyCell](https://github.com/carlosmobile/OpenWeather/blob/main/OpenWeather/Reusable%20Components/WeatherHourlyCell.swift): Cell with data of each collection hourly weather.<br>
 - [FooterSheetView](https://github.com/carlosmobile/OpenWeather/blob/main/OpenWeather/Reusable%20Components/FooterSheetView.swift): To show location alert and internet error alert<br>
@@ -102,14 +102,14 @@ Structs:
 # Tests
 
 This app test ViewModels, Models, Helpers, Common components, mock data, etc.. with 
-<br>
-<b>XCTests</b> <br>
+<br><br>
+<b>XCTests/UITests</b> <br>
 - [TestAPIClient](https://github.com/carlosmobile/OpenWeather/blob/main/OpenWeatherTests/TestAPIClient.swift): Test Network layer.<br>
 - [TestHelpers](https://github.com/carlosmobile/OpenWeather/blob/main/OpenWeatherTests/TestHelpers.swift): Test Tools and extensions .<br>
 - [TestModel](https://github.com/carlosmobile/OpenWeather/blob/main/OpenWeatherTests/TestModels.swift): Test WeatherModel.<br>
 - [TestViewModels](https://github.com/carlosmobile/OpenWeather/blob/main/OpenWeatherTests/TestViewModels.swift): Test WeatherViewModel.<br>
-<b>UITests</b>
-- [OpenWeatherUITests](https://github.com/carlosmobile/OpenWeather/blob/main/OpenWeatherUITests/OpenWeatherUITests.swift): UITest.<br>
+- [OpenWeatherUITests](https://github.com/carlosmobile/OpenWeather/blob/main/OpenWeatherUITests/OpenWeatherUITests.swift)<br>
+<br>
 Test Coverage 93%
 <br><br>
 <p align="left">
