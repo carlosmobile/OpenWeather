@@ -38,7 +38,7 @@ Example image with iPad Pro (11 inch) Xcode simulator:
 
 # Architecture
 
-I use native <b>SwiftUI MVVM</b>, of course this is a flexible architecture and I can implement it in a basic or advanced way as needed.
+I use <b>MVVM</b>, of course this is a flexible architecture and I can implement it in a basic or advanced way as needed.
 This project works with UIKit. <br><br>
 MVVM is a "reactive" architecture. Its a perfect fit to use Bindings. The view reacts to changes on the view model, and the view model updates its state based on data from the model.
 
